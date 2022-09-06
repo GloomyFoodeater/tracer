@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracer.Core", "Tracer.Core\Tracer.Core.csproj", "{2E6A760C-99F1-4D3F-A1D9-B67E8B04968C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracer.Serialization.Abstractions", "Tracer.Serialization.Abstractions\Tracer.Serialization.Abstractions.csproj", "{D2C30FBF-A366-4856-8842-6F5EF748592B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracer.Example", "Tracer.Example\Tracer.Example.csproj", "{471BD538-CBC4-41EB-9FD4-799166850216}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracer.Core.Tests", "Tracer.Core.Tests\Tracer.Core.Tests.csproj", "{EB0EC14D-98DC-425E-B4F3-66605198570C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E6A760C-99F1-4D3F-A1D9-B67E8B04968C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E6A760C-99F1-4D3F-A1D9-B67E8B04968C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E6A760C-99F1-4D3F-A1D9-B67E8B04968C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E6A760C-99F1-4D3F-A1D9-B67E8B04968C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2C30FBF-A366-4856-8842-6F5EF748592B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2C30FBF-A366-4856-8842-6F5EF748592B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2C30FBF-A366-4856-8842-6F5EF748592B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2C30FBF-A366-4856-8842-6F5EF748592B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{471BD538-CBC4-41EB-9FD4-799166850216}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{471BD538-CBC4-41EB-9FD4-799166850216}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{471BD538-CBC4-41EB-9FD4-799166850216}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{471BD538-CBC4-41EB-9FD4-799166850216}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB0EC14D-98DC-425E-B4F3-66605198570C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB0EC14D-98DC-425E-B4F3-66605198570C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB0EC14D-98DC-425E-B4F3-66605198570C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB0EC14D-98DC-425E-B4F3-66605198570C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

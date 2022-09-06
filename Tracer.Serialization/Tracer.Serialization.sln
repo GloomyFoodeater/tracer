@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracer.Serialization.Json", "Tracer.Serialization.Json\Tracer.Serialization.Json.csproj", "{D278263E-D30C-43D0-A5DE-2CF06A5AF98E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracer.Serialization.Yaml", "Tracer.Serialization.Yaml\Tracer.Serialization.Yaml.csproj", "{F74000D2-FF96-4467-9476-3534E1C0ADFF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracer.Serialization.Xml", "Tracer.Serialization.Xml\Tracer.Serialization.Xml.csproj", "{53F2C021-3DF1-4FF3-911B-6E1D849F46D1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tracer.Serialization.Abstractions", "..\Tracer\Tracer.Serialization.Abstractions\Tracer.Serialization.Abstractions.csproj", "{98F62F05-52F7-4578-A204-E8F50CC9552F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D278263E-D30C-43D0-A5DE-2CF06A5AF98E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D278263E-D30C-43D0-A5DE-2CF06A5AF98E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D278263E-D30C-43D0-A5DE-2CF06A5AF98E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D278263E-D30C-43D0-A5DE-2CF06A5AF98E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F74000D2-FF96-4467-9476-3534E1C0ADFF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F74000D2-FF96-4467-9476-3534E1C0ADFF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F74000D2-FF96-4467-9476-3534E1C0ADFF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F74000D2-FF96-4467-9476-3534E1C0ADFF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53F2C021-3DF1-4FF3-911B-6E1D849F46D1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53F2C021-3DF1-4FF3-911B-6E1D849F46D1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53F2C021-3DF1-4FF3-911B-6E1D849F46D1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53F2C021-3DF1-4FF3-911B-6E1D849F46D1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98F62F05-52F7-4578-A204-E8F50CC9552F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98F62F05-52F7-4578-A204-E8F50CC9552F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98F62F05-52F7-4578-A204-E8F50CC9552F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98F62F05-52F7-4578-A204-E8F50CC9552F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
