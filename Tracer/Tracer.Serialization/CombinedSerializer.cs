@@ -1,15 +1,22 @@
 ﻿using System.Reflection;
+using Tracer.Core;
 using Tracer.Serialization.Abstractions;
 
 namespace Tracer.Serialization;
 
-public static class SerializerLoader
+public class CombinedSerializer
 {
-    public static List<ITraceResultSerializer> LoadSerializers(string directory)
+    private readonly List<ITraceResultSerializer> _serializers;
+
+    public CombinedSerializer() => _serializers = new List<ITraceResultSerializer>();
+
+    public CombinedSerializer(string directory): this() => LoadPlugins(directory);
+
+    public void LoadPlugins(string directory)
     {
-        List<ITraceResultSerializer> serializers = new();
         string[] plugins = Directory.GetFiles(directory, "*.dll");
         foreach (var plugin in plugins)
+        {
             try
             {
                 var assembly = Assembly.LoadFrom(plugin);
@@ -19,11 +26,11 @@ public static class SerializerLoader
                 foreach (var type in types)
                 {
                     // Check if type implements interface.
-                    var interfaces = type.GetInterfaces();
+                    Type[] interfaces = type.GetInterfaces();
                     if (type.FullName != null && interfaces.Contains(typeof(ITraceResultSerializer)))
                     {
                         var serializer = (assembly.CreateInstance(type.FullName) as ITraceResultSerializer) !;
-                        serializers.Add(serializer);
+                        _serializers.Add(serializer);
                     }
                 }
             }
@@ -31,7 +38,15 @@ public static class SerializerLoader
             {
                 // Ignored.
             }
+        }
+    }
 
-        return serializers;
+    public void Write(TraceResult traceResult, string fileNamePrefix)
+    {
+        foreach (var serializer in _serializers)
+        {
+            using var to = new FileStream($"{fileNamePrefix}.{serializer.Format}", FileMode.Create);
+            serializer.Serialize(traceResult, to);
+        }
     }
 }
