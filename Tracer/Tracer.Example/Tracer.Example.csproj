@@ -6,15 +6,15 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
-
+    
     <ItemGroup>
       <ProjectReference Include="..\Tracer.Core\Tracer.Core.csproj" />
-      <ProjectReference Include="..\Tracer.Serialization.Abstractions\Tracer.Serialization.Abstractions.csproj" />
+      <ProjectReference Include="..\Tracer.Serialization\Tracer.Serialization.csproj" />
     </ItemGroup>
-
+    
     <ItemGroup>
-      <PackageReference Include="XSerializer" Version="0.4.4" />
-      <PackageReference Include="YamlDotNet" Version="12.0.0" />
+        <PackageReference Include="XSerializer" Version="0.4.4" />
+        <PackageReference Include="YamlDotNet" Version="12.0.0" />
     </ItemGroup>
 
 </Project>
