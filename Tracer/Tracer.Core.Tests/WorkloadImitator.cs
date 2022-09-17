@@ -1,6 +1,6 @@
 ﻿namespace Tracer.Core.Tests;
 
-internal class WorkloadImitator
+public class WorkloadImitator
 {
     private readonly ITracer _tracer;
 
@@ -25,6 +25,16 @@ internal class WorkloadImitator
         _tracer.StopTrace();
     }
 
+    public void M2()
+    {
+        _tracer.StartTrace();
+        Thread thread = new Thread(M0);
+        thread.Start();
+        M0();
+        _tracer.StopTrace();
+        thread.Join();
+    }
+    
     public static int GetEstimatedTime(string method)
     {
         switch (method)
@@ -33,6 +43,8 @@ internal class WorkloadImitator
                 return 100;
             case nameof(M1):
                 return 250;
+            case nameof(M2):
+                return 150;
             default:
                 return 0;
         }
