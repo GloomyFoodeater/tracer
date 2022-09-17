@@ -1,4 +1,4 @@
-﻿namespace Tracer.Core.Tests;
+﻿namespace Tracer.Core;
 
 public class WorkloadImitator
 {
