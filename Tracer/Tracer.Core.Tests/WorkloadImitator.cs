@@ -1,6 +1,6 @@
-﻿namespace Tracer.Core;
+﻿namespace Tracer.Core.Tests;
 
-public class WorkloadImitator
+internal class WorkloadImitator
 {
     private readonly ITracer _tracer;
 
@@ -37,16 +37,12 @@ public class WorkloadImitator
     
     public static int GetEstimatedTime(string method)
     {
-        switch (method)
+        return method switch
         {
-            case nameof(M0):
-                return 100;
-            case nameof(M1):
-                return 250;
-            case nameof(M2):
-                return 150;
-            default:
-                return 0;
-        }
+            nameof(M0) => 100,
+            nameof(M1) => 250,
+            nameof(M2) => 150,
+            _ => -1
+        };
     }
 }

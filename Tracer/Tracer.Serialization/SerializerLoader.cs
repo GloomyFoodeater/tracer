@@ -8,16 +8,15 @@ public static class SerializerLoader
     public static List<ITraceResultSerializer> LoadSerializers(string directory)
     {
         List<ITraceResultSerializer> serializers = new();
-        var plugins = Directory.GetFiles(directory, "*.dll");
-        foreach (string plugin in plugins)
-        {
+        string[] plugins = Directory.GetFiles(directory, "*.dll");
+        foreach (var plugin in plugins)
             try
             {
-                Assembly assembly = Assembly.LoadFrom(plugin);
+                var assembly = Assembly.LoadFrom(plugin);
 
                 // Get all types, which implement interface.
-                var types = assembly.GetTypes();
-                foreach (Type type in types)
+                Type[] types = assembly.GetTypes();
+                foreach (var type in types)
                 {
                     // Check if type implements interface.
                     var interfaces = type.GetInterfaces();
@@ -32,7 +31,6 @@ public static class SerializerLoader
             {
                 // Ignored.
             }
-        }
 
         return serializers;
     }

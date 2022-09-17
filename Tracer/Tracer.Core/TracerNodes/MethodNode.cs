@@ -26,7 +26,7 @@ internal class MethodNode
     {
         // Convert children methods from node to thread recursively.
         List<MethodInfo> methods = (Children.Count > 0 ? new List<MethodInfo>() : null)!;
-        foreach (MethodNode child in Children)
+        foreach (var child in Children)
         {
             methods.Add(child.ToMethodInfo());
         }

@@ -56,7 +56,7 @@ public class Tracer : ITracer
         List<ThreadInfo> threadInfos = new();
         lock (_threadsLock)
         {
-            foreach (ThreadNode threadNode in _threads)
+            foreach (var threadNode in _threads)
             {
                 threadInfos.Add(threadNode.ToThreadInfo());
             }

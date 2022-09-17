@@ -75,36 +75,44 @@ public class TracerTest
         t2.Join();
 
         TraceResult result = tracer.GetTraceResult();
-        int[] tids = { t1.ManagedThreadId, t2.ManagedThreadId, Thread.CurrentThread.ManagedThreadId };
 
+        // Array with thread ids to assert functions specific for each thread.
+        int[] tids = { t1.ManagedThreadId, t2.ManagedThreadId, Thread.CurrentThread.ManagedThreadId };
 
         // Assert
         Assert.Equal(4, result.Threads.Count);
         foreach (var threadInfo in result.Threads)
         {
-            AssertTime(threadInfo);
-
+            
+            int expectedLength;
+            
+            // Checks specific for each thread.
             if (threadInfo.Id == tids[0])
             {
-                Assert.Equal(1, threadInfo.Methods.Count);
+                expectedLength = 1;
                 AssertM0(threadInfo.Methods[0]);
             }
             else if (threadInfo.Id == tids[1])
             {
-                Assert.Equal(1, threadInfo.Methods.Count);
+                expectedLength = 1;
                 AssertM1(threadInfo.Methods[0]);
             }
             else if (threadInfo.Id == tids[2])
             {
+                expectedLength = 3;
                 AssertM2(threadInfo.Methods[0]);
                 AssertM0(threadInfo.Methods[1]);
                 AssertM1(threadInfo.Methods[2]);
             }
             else
             {
-                Assert.Equal(1, threadInfo.Methods.Count);
+                expectedLength = 1;
                 AssertM0(threadInfo.Methods[0]);
             }
+            
+            // Check for every thread.
+            AssertTime(threadInfo);
+            Assert.Equal(expectedLength, threadInfo.Methods.Count);
         }
     }
 

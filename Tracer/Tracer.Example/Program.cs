@@ -1,27 +1,32 @@
 ﻿using Tracer.Core;
+using Tracer.Example;
 using static Tracer.Serialization.SerializerLoader;
 
-// Use tracer in 6 threads to show an example.
+// Imitate work in 5 threads.
 void ImitateWork(ITracer tracer)
 {
-    tracer.StartTrace();
-    WorkloadImitator imitator = new(tracer);
+    Worker worker = new(tracer);
     Thread[] threads =
     {
-        new(imitator.M0),
-        new(imitator.M1),
-        new(imitator.M2)
+        new(worker.SimpleMethod),
+        new(() => worker.OuterMethod(2)),
+        new(worker.StartAdjacentMethods)
     };
+    foreach (var thread in threads)
+    {
+        thread.Start();
+    }
 
-    foreach (var thread in threads) thread.Start();
+    worker.SimpleMethod();
+    worker.OuterMethod(1);
+    worker.StartAdjacentMethods();
 
-    imitator.M0();
-    imitator.M1();
-    imitator.M2();
+    worker.MultiThreadWithRootMethod();
 
-    foreach (var thread in threads) thread.Join();
-
-    tracer.StopTrace();
+    foreach (var thread in threads)
+    {
+        thread.Join();
+    }
 }
 
 // Trace execution flow.
@@ -30,7 +35,7 @@ ImitateWork(tracer);
 var result = tracer.GetTraceResult();
 
 // Serializes tracer result.
-Console.WriteLine("Start serialization.");
+Console.WriteLine("Start of serialization.");
 var serializers = LoadSerializers("Plugins\\Serializers");
 foreach (var serializer in serializers)
 {
@@ -39,4 +44,4 @@ foreach (var serializer in serializers)
     serializer.Serialize(result, to);
 }
 
-Console.WriteLine("End serialization.");
+Console.WriteLine("End of serialization.");

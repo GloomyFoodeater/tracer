@@ -47,18 +47,12 @@ internal class ThreadNode
 
     public ThreadInfo ToThreadInfo()
     {
-        // Convert methods from nodes to info.
-        List<MethodInfo> methodInfos = new();
-        foreach (MethodNode methodNode in Methods)
-        {
-            methodInfos.Add(methodNode.ToMethodInfo());
-        }
-
-        // Calculate total execution time of the thread.
         int totalTime = 0;
-        foreach (MethodNode methodNode in Methods)
+        List<MethodInfo> methodInfos = new();
+        foreach (var methodNode in Methods)
         {
-            totalTime += (int)methodNode.Watch.Elapsed.TotalMilliseconds;;
+            totalTime += (int)methodNode.Watch.Elapsed.TotalMilliseconds;
+            methodInfos.Add(methodNode.ToMethodInfo());
         }
 
         return new ThreadInfo(Id, totalTime + "ms", methodInfos);
