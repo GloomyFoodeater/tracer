@@ -31,6 +31,6 @@ internal class MethodNode
             methods.Add(child.ToMethodInfo());
         }
 
-        return new(Name, Class, Watch.Elapsed.TotalMilliseconds + "ms", methods);
+        return new(Name, Class, (int)Watch.Elapsed.TotalMilliseconds + "ms", methods);
     }
 }
