@@ -26,8 +26,7 @@ public class CombinedSerializer
                 foreach (var type in types)
                 {
                     // Check if type implements interface.
-                    Type[] interfaces = type.GetInterfaces();
-                    if (type.FullName != null && interfaces.Contains(typeof(ITraceResultSerializer)))
+                    if (type.IsAssignableTo(typeof(ITraceResultSerializer)))
                     {
                         var serializer = (assembly.CreateInstance(type.FullName) as ITraceResultSerializer) !;
                         _serializers.Add(serializer);
