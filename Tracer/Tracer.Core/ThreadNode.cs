@@ -8,9 +8,9 @@ public class ThreadNode
     }
 
     public int Id { get; }
-    
+
     public List<MethodNode> Methods { get; } = new();
-    
+
     public MethodNode? Current { get; private set; }
 
     public void StartAdd(string name, string @class)
@@ -43,5 +43,24 @@ public class ThreadNode
             // Return link from child to father.
             Current = Current.Father;
         }
+    }
+
+    public ThreadInfo ToThreadInfo()
+    {
+        // Convert methods from nodes to info.
+        List<MethodInfo> methodInfos = new();
+        foreach (MethodNode methodNode in Methods)
+        {
+            methodInfos.Add(methodNode.ToMethodInfo());
+        }
+
+        // Calculate total execution time of the thread.
+        int totalTime = 0;
+        foreach (MethodNode methodNode in Methods)
+        {
+            totalTime += (int)methodNode.Watch.Elapsed.TotalMilliseconds;;
+        }
+
+        return new ThreadInfo(Id, totalTime + "ms", methodInfos);
     }
 }

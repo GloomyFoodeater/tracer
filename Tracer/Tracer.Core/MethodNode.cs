@@ -13,12 +13,24 @@ public class MethodNode
     }
 
     public string Name { get; }
-    
+
     public string Class { get; }
-    
+
     public Stopwatch Watch { get; } = new();
-    
+
     public MethodNode? Father { get; }
-    
+
     public List<MethodNode> Children { get; } = new();
+
+    public MethodInfo ToMethodInfo()
+    {
+        // Convert children methods from node to thread recursively.
+        List<MethodInfo> methods = new();
+        foreach (MethodNode child in Children)
+        {
+            methods.Add(child.ToMethodInfo());
+        }
+
+        return new(Name, Class, Watch.Elapsed.TotalMilliseconds + "ms", methods);
+    }
 }

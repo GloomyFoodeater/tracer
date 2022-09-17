@@ -44,6 +44,13 @@ public class Tracer : ITracer
 
     public TraceResult GetTraceResult()
     {
-        throw new NotImplementedException();
+        // Covert thread nodes to infos.
+        List<ThreadInfo> threadInfos = new();
+        foreach (ThreadNode threadNode in _threads)
+        {
+            threadInfos.Add(threadNode.ToThreadInfo());
+        }
+
+        return new(threadInfos);
     }
 }
