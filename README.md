@@ -1,10 +1,10 @@
 # Execution flow tracer
-Measure time of methods execution using system class StackTrace.
+Measure time of methods' execution using system class StackTrace.
 
 ## Tracer
-Tracer collects method name, caller class name, time of method execution,
-total execution time of analyzed methods in one flow and returns result as
-immutable tree.
+Tracer collects method name, caller class name, time of each method execution and
+total execution time of analyzed methods in the same thread and returns result as
+immutable tree of threads and methods.
 
 ## Usage
 ```C#
