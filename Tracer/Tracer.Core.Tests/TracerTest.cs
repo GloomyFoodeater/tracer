@@ -75,26 +75,26 @@ public class TracerTest
 
         // Assert
         Assert.Equal(4, result.Threads.Count);
-
-        // First thread
-        Assert.Equal(1, result.Threads[0].Methods.Count);
-        AssertM0(result.Threads[0].Methods[0]);
-        AssertTime(result.Threads[0]);
-
-        // Second thread
-        Assert.Equal(1, result.Threads[1].Methods.Count);
-        AssertM1(result.Threads[1].Methods[0]);
-        AssertTime(result.Threads[1]);
-
-        // Third thread
-        Assert.Equal(1, result.Threads[2].Methods.Count);
-        AssertM2(result.Threads[2].Methods[0]);
-        AssertTime(result.Threads[2]);
         
-        // Fourth thread
-        Assert.Equal(1, result.Threads[3].Methods.Count);
-        AssertM0(result.Threads[3].Methods[0]);
-        AssertTime(result.Threads[3]);
+        // Each thread has only 1 method => loop
+        List<string> actualNames = new();
+        foreach (var thread in result.Threads)
+        {
+            Assert.Equal(1, thread.Methods.Count);
+            string name = AssertMethodByName(thread.Methods[0]);
+            actualNames.Add(name);
+            AssertTime(thread);
+        }
+
+        string[] expectedNames =
+        {
+            nameof(WorkloadImitator.M0), 
+            nameof(WorkloadImitator.M1), 
+            nameof(WorkloadImitator.M2),
+            nameof(WorkloadImitator.M0) // WorkloadImitator.M2 invokes M0 in new thread
+        };
+        
+        Assert.True(actualNames.SequenceEqual(expectedNames));
     }
 
     private bool TimeToInt(MethodInfo info, out int actualTime) => int.TryParse(info.Time[..^2], out actualTime);
@@ -110,6 +110,26 @@ public class TracerTest
         Assert.Equal(nameof(WorkloadImitator.M0), method.Name);
         Assert.Equal(nameof(WorkloadImitator), method.Class);
         Assert.Null(method.Methods);
+    }
+
+    private string AssertMethodByName(MethodInfo method)
+    {
+        switch (method.Name)
+        {
+            case nameof(WorkloadImitator.M0):
+                AssertM0(method);
+                break;
+            case nameof(WorkloadImitator.M1):
+                AssertM1(method);
+                break;
+            case nameof(WorkloadImitator.M2):
+                AssertM2(method);
+                break;
+            default:
+                throw new ArgumentException($"Asserting incorrect method {method.Class}.{method.Name}");
+        }
+
+        return method.Name;
     }
 
     private void AssertM1(MethodInfo method)
