@@ -4,4 +4,4 @@ public record MethodInfo(
     string Name,
     string Class,
     string Time,
-    IReadOnlyList<MethodInfo> Methods);
+    IReadOnlyList<MethodInfo>? Methods);
