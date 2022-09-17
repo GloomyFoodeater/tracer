@@ -64,37 +64,48 @@ public class TracerTest
 
         // Act
         Thread t1 = new Thread(imitator.M0);
-        t1.Start();
         Thread t2 = new Thread(imitator.M1);
+
+        t1.Start();
         t2.Start();
+        imitator.M2();
+        imitator.M0();
+        imitator.M1();
         t1.Join();
         t2.Join();
-        imitator.M2();
 
         TraceResult result = tracer.GetTraceResult();
+        int[] tids = { t1.ManagedThreadId, t2.ManagedThreadId, Thread.CurrentThread.ManagedThreadId };
+
 
         // Assert
         Assert.Equal(4, result.Threads.Count);
-        
-        // Each thread has only 1 method => loop
-        List<string> actualNames = new();
-        foreach (var thread in result.Threads)
+        foreach (var threadInfo in result.Threads)
         {
-            Assert.Equal(1, thread.Methods.Count);
-            string name = AssertMethodByName(thread.Methods[0]);
-            actualNames.Add(name);
-            AssertTime(thread);
-        }
+            AssertTime(threadInfo);
 
-        string[] expectedNames =
-        {
-            nameof(WorkloadImitator.M0), 
-            nameof(WorkloadImitator.M1), 
-            nameof(WorkloadImitator.M2),
-            nameof(WorkloadImitator.M0) // WorkloadImitator.M2 invokes M0 in new thread
-        };
-        
-        Assert.True(actualNames.SequenceEqual(expectedNames));
+            if (threadInfo.Id == tids[0])
+            {
+                Assert.Equal(1, threadInfo.Methods.Count);
+                AssertM0(threadInfo.Methods[0]);
+            }
+            else if (threadInfo.Id == tids[1])
+            {
+                Assert.Equal(1, threadInfo.Methods.Count);
+                AssertM1(threadInfo.Methods[0]);
+            }
+            else if (threadInfo.Id == tids[2])
+            {
+                AssertM2(threadInfo.Methods[0]);
+                AssertM0(threadInfo.Methods[1]);
+                AssertM1(threadInfo.Methods[2]);
+            }
+            else
+            {
+                Assert.Equal(1, threadInfo.Methods.Count);
+                AssertM0(threadInfo.Methods[0]);
+            }
+        }
     }
 
     private bool TimeToInt(MethodInfo info, out int actualTime) => int.TryParse(info.Time[..^2], out actualTime);
@@ -110,26 +121,6 @@ public class TracerTest
         Assert.Equal(nameof(WorkloadImitator.M0), method.Name);
         Assert.Equal(nameof(WorkloadImitator), method.Class);
         Assert.Null(method.Methods);
-    }
-
-    private string AssertMethodByName(MethodInfo method)
-    {
-        switch (method.Name)
-        {
-            case nameof(WorkloadImitator.M0):
-                AssertM0(method);
-                break;
-            case nameof(WorkloadImitator.M1):
-                AssertM1(method);
-                break;
-            case nameof(WorkloadImitator.M2):
-                AssertM2(method);
-                break;
-            default:
-                throw new ArgumentException($"Asserting incorrect method {method.Class}.{method.Name}");
-        }
-
-        return method.Name;
     }
 
     private void AssertM1(MethodInfo method)
