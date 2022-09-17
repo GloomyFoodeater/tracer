@@ -1,6 +1,6 @@
 ﻿namespace Tracer.Core;
 
-public class ThreadNode
+internal class ThreadNode
 {
     public ThreadNode(int id)
     {
@@ -9,9 +9,9 @@ public class ThreadNode
 
     public int Id { get; }
 
-    public List<MethodNode> Methods { get; } = new();
+    private List<MethodNode> Methods { get; } = new();
 
-    public MethodNode? Current { get; private set; }
+    private MethodNode? Current { get; set; }
 
     public void StartAdd(string name, string @class)
     {

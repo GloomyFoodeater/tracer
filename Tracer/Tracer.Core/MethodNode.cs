@@ -2,7 +2,7 @@
 
 namespace Tracer.Core;
 
-public class MethodNode
+internal class MethodNode
 {
     public MethodNode(string name, string @class, MethodNode? father)
     {
@@ -12,9 +12,9 @@ public class MethodNode
         Watch.Start();
     }
 
-    public string Name { get; }
+    private string Name { get; }
 
-    public string Class { get; }
+    private string Class { get; }
 
     public Stopwatch Watch { get; } = new();
 
