@@ -1,30 +1,18 @@
-﻿using System.Diagnostics;
+﻿using System.Collections.Concurrent;
+using System.Diagnostics;
 using Tracer.Core.TracerNodes;
 
 namespace Tracer.Core;
 
 public class Tracer : ITracer
 {
-    private readonly List<ThreadNode> _threads = new();
-
-    private readonly object _threadsLock = new object();
+    private readonly ConcurrentDictionary<int, ThreadNode> _threads = new();
 
     public void StartTrace()
     {
         // Get thread node to update.
         int tid = Thread.CurrentThread.ManagedThreadId;
-        ThreadNode? threadNode;
-        lock (_threadsLock)
-        {
-            threadNode = _threads.Find(node => node.Id == tid);
-
-            // Add new thread node to list.
-            if (threadNode == null)
-            {
-                threadNode = new ThreadNode(tid);
-                _threads.Add(threadNode);
-            }
-        }
+        ThreadNode threadNode = _threads.GetOrAdd(tid, key => new ThreadNode(key));
 
         // Get caller info.
         StackTrace trace = new();
@@ -40,26 +28,20 @@ public class Tracer : ITracer
     {
         // Get thread node to update.
         int tid = Thread.CurrentThread.ManagedThreadId;
-        ThreadNode? threadNode;
-        lock (_threadsLock)
+        if (_threads.TryGetValue(tid, out var threadNode))
         {
-            threadNode = _threads.Find(node => node.Id == tid);
+            // Stop adding method to method tree.
+            threadNode.StopAdd();
         }
-
-        // Stop adding method to method tree.
-        threadNode?.StopAdd();
     }
 
     public TraceResult GetTraceResult()
     {
-        // Covert thread nodes to infos.
+        // Convert thread nodes to infos.
         List<ThreadInfo> threadInfos = new();
-        lock (_threadsLock)
+        foreach (var (_, threadNode) in _threads)
         {
-            foreach (var threadNode in _threads)
-            {
-                threadInfos.Add(threadNode.ToThreadInfo());
-            }
+            threadInfos.Add(threadNode.ToThreadInfo());
         }
 
         return new(threadInfos);
