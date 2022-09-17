@@ -14,6 +14,7 @@ public class YamlTraceResultSerializer : ITraceResultSerializer
         var serializer = new SerializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .DisableAliases()
+            .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull)
             .Build();
         using var writer = new StreamWriter(to);
         serializer.Serialize(writer, traceResult);
