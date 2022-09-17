@@ -11,7 +11,10 @@ public class YamlTraceResultSerializer : ITraceResultSerializer
 
     public void Serialize(TraceResult traceResult, Stream to)
     {
-        var serializer = new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
+        var serializer = new SerializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .DisableAliases()
+            .Build();
         using var writer = new StreamWriter(to);
         serializer.Serialize(writer, traceResult);
     }

@@ -48,7 +48,7 @@ internal class ThreadNode
     public ThreadInfo ToThreadInfo()
     {
         // Convert methods from nodes to info.
-        List<MethodInfo> methodInfos = new();
+        List<MethodInfo> methodInfos = (Methods.Count > 0 ? new List<MethodInfo>() : null)!;
         foreach (MethodNode methodNode in Methods)
         {
             methodInfos.Add(methodNode.ToMethodInfo());

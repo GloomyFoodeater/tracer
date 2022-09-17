@@ -1,4 +1,5 @@
 ﻿using System.Text.Json;
+using System.Text.Json.Serialization;
 using Tracer.Core;
 using Tracer.Serialization.Abstractions;
 
@@ -13,7 +14,8 @@ public class JsonTraceResultSerializer : ITraceResultSerializer
         JsonSerializerOptions options = new()
         {
             WriteIndented = true,
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
         };
         JsonSerializer.Serialize(to, traceResult, options);
     }
