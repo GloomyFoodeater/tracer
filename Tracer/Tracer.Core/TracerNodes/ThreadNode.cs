@@ -1,4 +1,4 @@
-﻿namespace Tracer.Core;
+﻿namespace Tracer.Core.TracerNodes;
 
 internal class ThreadNode
 {

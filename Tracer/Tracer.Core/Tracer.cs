@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using Tracer.Core.TracerNodes;
 
 namespace Tracer.Core;
 
