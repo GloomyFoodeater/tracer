@@ -4,12 +4,14 @@ using XSerializer;
 
 namespace Tracer.Serialization.Xml;
 
-public class XmlTraceResultSerializer: ITraceResultSerializer
+public class XmlTraceResultSerializer : ITraceResultSerializer
 {
     public string Format => "xml";
+
     public void Serialize(TraceResult traceResult, Stream to)
     {
-        XmlSerializer<TraceResult> serializer = new(new XmlSerializationOptions().Indent());
-        serializer.Serialize(to, traceResult);
+        XmlTraceResult wrapper = new(traceResult);
+        XmlSerializer<XmlTraceResult> serializer = new(new XmlSerializationOptions().Indent());
+        serializer.Serialize(to, wrapper);
     }
 }
